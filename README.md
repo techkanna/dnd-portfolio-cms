@@ -34,16 +34,16 @@ A modern, drag-and-drop portfolio builder built with Next.js, TypeScript, Tailwi
 
 ### 1. Clone the Repository
 
-\`\`\`bash
+```bash
 git clone <your-repo-url>
 cd portfolio-cms
-\`\`\`
+```
 
 ### 2. Install Dependencies
 
-\`\`\`bash
+```bash
 npm install
-\`\`\`
+```
 
 ### 3. Set Up Supabase
 
@@ -55,18 +55,18 @@ npm install
 
 Create a `.env.local` file in the root directory:
 
-\`\`\`env
+```env
 # Supabase Configuration
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-\`\`\`
+```
 
 ### 5. Run the Development Server
 
-\`\`\`bash
+```bash
 npm run dev
-\`\`\`
+```
 
 Open [http://localhost:3000](http://localhost:3000) to see the application.
 
@@ -101,14 +101,14 @@ Open [http://localhost:3000](http://localhost:3000) to see the application.
 ### Docker Deployment
 
 1. **Build the Docker image:**
-\`\`\`bash
+```bash
 docker build -t portfolio-cms .
-\`\`\`
+```
 
 2. **Run with Docker Compose:**
-\`\`\`bash
+```bash
 docker-compose up -d
-\`\`\`
+```
 
 This will start:
 - Next.js app on port 3000
@@ -118,10 +118,10 @@ This will start:
 ### Vercel Deployment
 
 1. **Deploy to Vercel:**
-\`\`\`bash
+```bash
 npm install -g vercel
 vercel
-\`\`\`
+```
 
 2. **Set environment variables** in your Vercel dashboard
 
@@ -131,7 +131,7 @@ vercel
 
 The application uses a simple but flexible schema:
 
-\`\`\`sql
+```sql
 CREATE TABLE portfolios (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID NOT NULL,
@@ -140,7 +140,7 @@ CREATE TABLE portfolios (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
-\`\`\`
+```
 
 The `layout_json` field stores the entire portfolio structure as JSON, including all blocks and their properties.
 
@@ -151,7 +151,7 @@ The `layout_json` field stores the entire portfolio structure as JSON, including
 
 ## Project Structure
 
-\`\`\`
+```
 portfolio-cms/
 ├── src/
 │   ├── app/                    # Next.js App Router pages
@@ -174,7 +174,7 @@ portfolio-cms/
 ├── docker-compose.yml         # Multi-container setup
 ├── init.sql                   # Database schema
 └── README.md                  # This file
-\`\`\`
+```
 
 ## Contributing
 
