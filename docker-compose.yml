@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: portfolio_postgres
+    environment:
+      POSTGRES_DB: portfolio_cms
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - portfolio_network
+
+  # Next.js Application
+  app:
+    build: .
+    container_name: portfolio_app
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321
+      - NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+      - SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    networks:
+      - portfolio_network
+
+  # Supabase Local Development (optional)
+  supabase:
+    image: supabase/supabase:latest
+    container_name: portfolio_supabase
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - JWT_SECRET=your-super-secret-jwt-token-with-at-least-32-characters-long
+      - ANON_KEY=your_supabase_anon_key
+      - SERVICE_ROLE_KEY=your_supabase_service_role_key
+    ports:
+      - "54321:8000"
+    depends_on:
+      - postgres
+    networks:
+      - portfolio_network
+
+volumes:
+  postgres_data:
+
+networks:
+  portfolio_network:
+    driver: bridge 

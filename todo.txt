@@ -1,0 +1,157 @@
+📁 Project: Portfolio CMS with Drag & Drop Editor (Medium-Hard)
+🎯 Goal
+Build a web app where users can design a custom portfolio page using a drag-and-drop layout editor, save sections as templates, and store/retrieve them securely with Supabase backend.
+
+🧰 Stack
+| Tech                   | Purpose                      |
+| ---------------------- | ---------------------------- |
+| **Next.js**            | React framework + routing    |
+| **TypeScript**         | Type safety                  |
+| **Tailwind CSS**       | UI styling                   |
+| **Zustand** or Context | State management             |
+| **Stripe API**         | Checkout integration         |
+| **Docker** (Optional)  | For local/proxmox deployment |
+
+
+✨ Prompt for Cursor (Step-by-Step)
+text
+
+Build a Portfolio CMS web app using Next.js, TypeScript, Tailwind CSS, Supabase, and a drag-and-drop UI builder.
+
+Follow this plan:
+
+🔹 1. Scaffold the Project:
+- Create a Next.js app with TypeScript and Tailwind CSS configured.
+- Pages: `/`, `/login`, `/editor`, `/view/[id]`
+- Set up Supabase client with environment variables.
+
+
+🔹 2. Supabase Setup:
+- Enable Supabase Auth (email/password)
+- Create a `portfolios` table:
+
+```sql
+id: UUID (Primary Key)
+user_id: UUID (FK from auth.users)
+title: String
+layout_json: JSONB
+created_at: Timestamp
+Create an API endpoint /api/portfolio/save to store the layout JSON.
+
+🔹 3. Auth Integration:
+
+Add Supabase Auth client to the app
+
+Build /login and /signup pages
+
+Restrict access to /editor unless user is logged in
+
+🔹 4. Drag & Drop Editor:
+
+Use React DnD
+
+Create draggable "blocks" like:
+
+Text block
+
+Image block
+
+Button block
+
+Grid block
+
+Allow users to rearrange blocks and edit content inline
+
+🔹 5. Save Layout:
+
+Convert block structure into a JSON schema
+
+Save schema to Supabase on click of “Save” button
+
+Load saved schema into editor when user revisits /editor
+
+🔹 6. Template Mode:
+
+Allow users to save their block layout as a reusable template
+
+Add UI to switch between multiple saved portfolios or templates
+
+🔹 7. Public View Page:
+
+Create /view/[id] page to render layout JSON as a live portfolio
+
+Style with Tailwind to match user-designed layout
+
+🔹 8. Dockerize the App:
+
+Create a Dockerfile and docker-compose.yml that:
+
+Runs the app on port 3000
+
+Links with a PostgreSQL container
+
+Includes setup for a self-hosted Supabase instance
+
+🔹 9. Realtime Collaboration:
+
+Use Supabase Realtime to allow live multi-user editing (like Notion)
+
+🔹 10. UI/UX:
+
+Use Tailwind + Framer Motion to make the drag/drop UI intuitive
+
+Add autosave, undo/redo (Zustand or Immer)
+
+Mobile-friendly layout and preview mode
+
+Goals:
+
+Clean separation of concerns (components, state, API)
+
+Secure Supabase auth and data fetch
+
+Modern, responsive UI that works well in production
+
+
+## 🧱 Suggested File Structure
+
+portfolio-cms/
+├── components/
+│ ├── Editor/
+│ │ ├── DraggableBlock.tsx
+│ │ └── BlockToolbar.tsx
+│ └── Auth/
+├── lib/
+│ └── supabaseClient.ts
+├── pages/
+│ ├── index.tsx
+│ ├── login.tsx
+│ ├── editor.tsx
+│ └── view/
+│ └── [id].tsx
+├── store/
+│ └── useLayoutStore.ts
+├── api/
+│ └── save.ts
+├── .env.local
+├── Dockerfile
+└── docker-compose.yml
+
+yaml
+
+## 🧠 Optional: Add Design System
+
+Create a design system with reusable Tailwind components like `BlockCard`, `SaveButton`, and `ToolbarIcon` styled consistently.
+
+
+## 📌 Bonus Feature Prompts
+
+- **Autosave feature:**  
+> Add auto-save functionality that runs every 10 seconds and saves layout to Supabase if changes detected.
+
+- **Undo/Redo stack:**  
+> Implement undo/redo using Zustand and Immer.js to track history of layout changes.
+
+- **Export to JSON file:**  
+> Add a button to export the current layout schema to a `.json` file for download.
+
